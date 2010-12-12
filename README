@@ -1,2 +1,1 @@
-aojtools is a library and toolset for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) written in Python, including transparently API acccess, problem submit tool and CLI script.
-aojpyはPythonで記述されたAIZU ONLINE JUDGE(http://rose.u-aizu.ac.jp/onlinejudge/) 向けのライブラリとツールセットです。このツールは透過的なAPIアクセスと、提出ツール、それとコマンドラインインタフェースを含みます。
+aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.
