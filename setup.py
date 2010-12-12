@@ -1,6 +1,6 @@
 from setuptools import setup
 
-desc = 'aojtools is a toolset for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) written in Python, including transparently API acccess, problem submit tool and CLI script.'
+desc = 'aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.'
 ldesc = desc
 
 setup(
