@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import sys
-import api
+from aojtools import api
 
 if len(sys.argv) < 2:
     print 'usage: %s problemid' % __file__

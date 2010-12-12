@@ -1,8 +1,7 @@
 # coding: utf-8
 
 import sys
-import libxmlload
-import api
+from aojtools import api
 
 if len(sys.argv) < 2:
     ps = api.problemcategory()

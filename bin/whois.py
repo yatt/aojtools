@@ -2,8 +2,9 @@
 
 import sys
 import time
-import libxmlload
-import api
+from aojtools import api
+from api import libxmlload
+
 
 if len(sys.argv) < 2:
     print 'usage: %s userid' % __file__
