@@ -15,7 +15,7 @@ setup(
     ]
     , author='yatt'
     , author_email='darknesssharp@gmail.com'
-    , namespace_packages=['api', 'submit']
+    , py_modules=['api', 'submit']
     , license='MIT'
 )
 
