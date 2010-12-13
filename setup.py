@@ -15,7 +15,7 @@ setup(
     ]
     , author='yatt'
     , author_email='darknesssharp@gmail.com'
-    , packages=['aojtools'],
+    , packages=['aojtools']
     #, scripts=['scripts']
     , license='MIT'
 )
