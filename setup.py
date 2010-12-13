@@ -15,8 +15,8 @@ setup(
     ]
     , author='yatt'
     , author_email='darknesssharp@gmail.com'
-    , py_modules=['api', 'submit']
-    , package_namespaces=['aojtools'],
+    , packages=['aojtools'],
+    #, scripts=['scripts']
     , license='MIT'
 )
 
