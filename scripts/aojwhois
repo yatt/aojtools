@@ -4,7 +4,6 @@
 import sys
 import time
 from aojtools import api
-from api import libxmlload
 
 
 if len(sys.argv) < 2:
@@ -23,7 +22,7 @@ def recursion(info, depth=0):
                 if i % n == n-1 or i == len(v.problem) - 1:
                     print ''
             continue
-        lst = [libxmlload.Node, list]
+        lst = [api.libxmlload.Node, list]
         has = not any(map(lambda cls: isinstance(v, cls), lst))
         print '%s%s %s' % ('  ' * depth, "+-"[has], k.ljust(12)),
         if has:
