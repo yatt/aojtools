@@ -6,7 +6,7 @@ from aojtools import api
 
 if len(sys.argv) < 2:
     print 'usage: %s problemid' % __file__
-    os.exit()
+    sys.exit()
 
 def recursion(info, depth=0):
     for k,v in info:
