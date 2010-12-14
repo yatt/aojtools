@@ -7,16 +7,17 @@ from optparse import OptionParser
 import aojtools
 
 def convert(s):
-    try:
-       for enc in ['utf-8', 'cp932', 'sjis', 'euc-jp', 'iso-2022']:
+    for enc in ['utf-8', 'cp932', 'sjis', 'euc-jp', 'iso-2022-jp']:
+        try:
            t = s.decode(enc)
-           return t.encode(aojtools.settings.siteencoding)
-    except Exception, e:
-        raise e
+           return t.encode(aojtools.settings.SITEENCODING)
+        except Exception, e:
+            pass
+    raise Exception('unknown file encoding.')
 
 def main():
     filepath = ''
-    filetype = ''
+    lang = ''
     problem_id = ''
     user_id = ''
     password = ''
@@ -32,14 +33,23 @@ def main():
     print parser.uid
     print parser.lang
     
+    if lang = '':
+        ext = '.c'
+        pairs = [('.c', api.settings.LANG_C), ('.cpp.cxx.cc.cp', api.settings.LANG_CPP), ('.java', api.settings.LANG_JAVA)]
+        for exts, cst in pairs:
+            if ext in exts:
+                lang = cst
+    
     info = {
         'user_id': user_id,
         'password': password,
         'code': convert(open(filepath).read()),
-        'problem_id': problem_id
+        'problem_id': problem_id,
+        'lang': lang
     }
     try:
         status = aojtools.submit()
+        print status.status
     except Exception, e:
         print '******************** ERROR *********************'
         print e

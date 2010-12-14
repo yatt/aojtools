@@ -36,6 +36,7 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
             'password': (password),
             'code': (source code),
             'problem_id': (problem id, integer or string),
+            'lang': (language "C","C++",or"JAVA")
         }
         submit(info)
         #submit(info, timeout=3) # seconds

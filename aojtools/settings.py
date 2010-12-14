@@ -16,4 +16,8 @@ url = {
 submiturl = hhost + '/onlinejudge/servlet/Submit'
 
 # webpage encoding
-siteencoding = 'sjis'
+SITEENCODING = 'sjis'
+
+LANG_C = 'C'
+LANG_CPP = 'C++'
+LANG_JAVA = 'JAVA'
