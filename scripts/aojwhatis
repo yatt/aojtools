@@ -1,11 +1,12 @@
 #! /usr/bin/python
 # coding: utf-8
 
+import os
 import sys
 from aojtools import api
 
 if len(sys.argv) < 2:
-    print 'usage: %s problemid' % __file__
+    print 'usage: %s problemid' % os.path.basename(__file__)
     sys.exit()
 
 def recursion(info, depth=0):

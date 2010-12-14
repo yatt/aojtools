@@ -1,6 +1,7 @@
 host = 'rose.u-aizu.ac.jp'
 hhost = 'http://' + host
 
+# API url
 url = {
     'user': hhost + '/onlinejudge/webservice/user',
     'problem': hhost + '/onlinejudge/webservice/problem',
@@ -11,4 +12,8 @@ url = {
     'problemcategory': hhost + '/onlinejudge/webservice/problem_category',
 }
 
+# submit destination url
 submiturl = hhost + '/onlinejudge/servlet/Submit'
+
+# webpage encoding
+siteencoding = 'sjis'

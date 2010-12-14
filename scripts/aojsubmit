@@ -1,4 +1,48 @@
 #! /usr/bin/python
 # coding: utf-8
 
+import os
+import sys
+from optparse import OptionParser
 import aojtools
+
+def convert(s):
+    try:
+       for enc in ['utf-8', 'cp932', 'sjis', 'euc-jp', 'iso-2022']:
+           t = s.decode(enc)
+           return t.encode(aojtools.settings.siteencoding)
+    except Exception, e:
+        raise e
+
+def main():
+    filepath = ''
+    filetype = ''
+    problem_id = ''
+    user_id = ''
+    password = ''
+    
+    parser = OptionParser()
+    parser.add_option('-p', '--password', dest='pwd', metavar='PASSWORD')
+    parser.add_option('-u', '--userid', dest='uid', metavar='USERID')
+    parser.add_option('-l', '--language', dest='lang', metavar='LANGUAGE', help='c,cpp,java')
+    
+    opts, args = parser.parse_args()
+    
+    print parser.pwd
+    print parser.uid
+    print parser.lang
+    
+    info = {
+        'user_id': user_id,
+        'password': password,
+        'code': convert(open(filepath).read()),
+        'problem_id': problem_id
+    }
+    try:
+        status = aojtools.submit()
+    except Exception, e:
+        print '******************** ERROR *********************'
+        print e
+
+if __name__ == '__main__':
+    main()

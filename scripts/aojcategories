@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # coding: utf-8
 
+import os
 import sys
 from aojtools import api
 
@@ -15,7 +16,7 @@ if len(sys.argv) < 2:
     for k in d:
         print k.ljust(15), d[k]
 elif sys.argv[1] == 'help':
-    print 'usage %s (|category-name|problem-id)'
+    print 'usage %s (|category-name|problem-id)' % os.path.basename(__file__)
 elif sys.argv[1].isdigit():
     pid = sys.argv[1]
     p = api.problemcategory(id=pid)
