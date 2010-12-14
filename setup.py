@@ -1,4 +1,5 @@
 from setuptools import setup
+import glob
 
 desc = 'aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.'
 ldesc = desc
@@ -16,7 +17,7 @@ setup(
     , author='yatt'
     , author_email='darknesssharp@gmail.com'
     , packages=['aojtools']
-    , scripts=['scripts']
+    , scripts=glob.glob('scripts/*')
     , license='MIT'
 )
 
