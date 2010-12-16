@@ -47,14 +47,16 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
         rid = resp.status[0].run_id
     except Exception, e:
         raise e
-    
+   
     # submit
     ret = None
     try:
         ret = submit_noresult(info, timeout)
     except Exception, e:
         raise e
-    
+    if 'UserID or Password is Wrong.' in ret:
+        raise Exception('userid or password is wrong.')
+     
     # wait until update
     ntry = 0
     while True:

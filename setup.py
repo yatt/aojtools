@@ -1,7 +1,7 @@
 from setuptools import setup
 import glob
 
-desc = 'aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.'
+desc = 'aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.'
 ldesc = desc
 
 setup(
@@ -15,6 +15,7 @@ setup(
         , 'Topic :: Software Development :: Libraries :: Python Modules'
     ]
     , author='yatt'
+    , keywords=['competitive programming']
     , author_email='darknesssharp@gmail.com'
     , packages=['aojtools']
     , scripts=glob.glob('scripts/*')
