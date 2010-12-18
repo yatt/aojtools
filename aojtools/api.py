@@ -4,6 +4,8 @@ import time
 import libxmlload
 import settings
 
+__all__ = ['user', 'problem', 'problemlist', 'alluserlist', 'solvedrecord', 'statuslog', 'problemcategory']
+
 def base(apiid, **args):
     assert apiid in settings.url.keys()
     url = settings.url[apiid]
@@ -104,8 +106,23 @@ def alluserlist(criteria='', affiliation='', solved_min='', solved_max=''):
         usr.rank   = int(usr.rank)
     return lst
 
-def solvedrecord():
-    return base('solvedrecord', )
+def solvedrecord(user_id='', problem_id='', language='', date_begin='', date_end=''):
+    kwargs = {}
+    if user_id == '' and problem_id == '':
+        raise Exception('user_id or problem_id should be specified.')
+    for arg in ['user_id', 'problem_id', 'language', 'date_begin', 'date_end']:
+        if eval(arg + ' != \'\''):
+            kwargs[arg] = eval(arg)
+    resp = base('solvedrecord', **kwargs)
+    for n in resp.solved:
+        n.date = time2date(n.date)
+        n.date_str = date2str(n.date)
+        n.problem_id = int(n.problem_id)
+        n.run_id = int(n.run_id)
+        n.cputime = int(n.cputime)
+        n.memory = int(n.memory)
+        n.code_size = int(n.code_size)
+    return resp
 
 def statuslog(user_id='', problem_id='', start='', limit=''):
     kwargs = {}
