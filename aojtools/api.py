@@ -91,8 +91,12 @@ def problem(id):
             exec '@ = int(@)'.replace('@', t)
     return p
 
-def problemlist(vid):
-    return base('problemlist', volume=vid)
+def problemlist(volume):
+    resp = base('problemlist', volume=volume)
+    for p in resp.problem:
+        p.problemmemorylimit = int(p.problemmemorylimit)
+        p.problemtimelimit = int(p.problemtimelimit)
+    return resp
 
 def alluserlist(criteria='', affiliation='', solved_min='', solved_max=''):
     kwargs = {}
@@ -129,14 +133,20 @@ def statuslog(user_id='', problem_id='', start='', limit=''):
     for arg in ['user_id', 'problem_id', 'start', 'limit']:
         if eval(arg + ' != \'\''):
             kwargs[arg] = eval(arg)
-    lst = base('statuslog', **kwargs)
-    for st in lst.status:
+    def f(st):
         st.submission_date = time2date(st.submission_date)
         st.submission_date_str = date2str(st.submission_date)
         st.code_size = int(st.code_size)
         st.cpu_time = int(st.cpu_time)
         st.run_id = int(st.run_id)
         st.memory = int(st.memory)
+        return st
+    lst = base('statuslog', **kwargs)
+    if isinstance(lst.status, list):
+        for st in lst.status:
+            f(st)
+    else:
+        lst.status = [f(lst.status)]
     return lst
 
 def problemcategory(id=None, category=None):
