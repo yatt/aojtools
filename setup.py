@@ -6,7 +6,7 @@ ldesc = desc
 
 setup(
     name='aojtools'
-    , version='0.1.0'
+    , version='0.1.1'
     , description=desc
     , long_description=ldesc
     , classifiers = [
