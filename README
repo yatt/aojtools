@@ -1,1 +1,1 @@
-aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.
+aojtools is a toolset written in Python for aoj, aizu online judge system(http://judge.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess library, problem submit library and CLI script.
