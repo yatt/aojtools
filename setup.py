@@ -1,12 +1,15 @@
 from setuptools import setup
 import glob
 
-desc = 'aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.'
+desc = """aojtools is a toolset written in Python for aoj, aizu online judge system(http://rose.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.
+
+2011/05/08 update for hostname change
+"""
 ldesc = desc
 
 setup(
     name='aojtools'
-    , version='0.1.4'
+    , version='0.1.5'
     , description=desc
     , long_description=ldesc
     , classifiers = [
