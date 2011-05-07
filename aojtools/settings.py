@@ -1,4 +1,4 @@
-host = 'judge.u-aizu.ac.jp'
+host = 'rose.u-aizu.ac.jp'
 hhost = 'http://' + host
 
 # API url
