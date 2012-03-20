@@ -11,7 +11,7 @@ def submit_noresult(info, timeout=None):
     assert (timeout is None) or (isinstance(timeout, int) and timeout > 0), 'timout must be a positive integer'
     if isinstance(info['problem_id'], int):
         info['problem_id'] = '%04d' % info['problem_id']
-    assert len(info['problem_id']) == 4, 'problem id must be a positive integer or four-length string'
+    #assert len(info['problem_id']) == 4, 'problem id must be a positive integer or four-length string'
     assert info['lang'] in ['C', 'C++', 'JAVA'], 'lang must be "C", "C++" or "JAVA"'
     
     url = settings.submiturl

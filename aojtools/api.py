@@ -137,7 +137,7 @@ def statuslog(user_id='', problem_id='', start='', limit=''):
         st.submission_date = time2date(st.submission_date)
         st.submission_date_str = date2str(st.submission_date)
         st.code_size = int(st.code_size)
-        st.cpu_time = int(st.cpu_time)
+        st.cputime = int(st.cputime)
         st.run_id = int(st.run_id)
         st.memory = int(st.memory)
         return st
