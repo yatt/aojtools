@@ -1,0 +1,22 @@
+Metadata-Version: 1.0
+Name: aojtools
+Version: 0.1.6
+Summary: aojtools is a toolset written in Python for aoj, aizu online judge system(http://judge.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.
+
+2011/05/08 update for hostname change
+2012/03/21 update for api specification change
+
+Home-page: UNKNOWN
+Author: yatt
+Author-email: darknesssharp@gmail.com
+License: MIT
+Description: aojtools is a toolset written in Python for aoj, aizu online judge system(http://judge.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.
+        
+        2011/05/08 update for hostname change
+        2012/03/21 update for api specification change
+        
+Keywords: competitive programming
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
