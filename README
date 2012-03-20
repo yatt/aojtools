@@ -1,7 +1,7 @@
-aojtools��AOJ(Aizu Online Judge http://judge.u-aizu.ac.jp/onlinejudge/ )�̂��߂̃c�[���Z�b�g�ł��B�ȉ����܂݂܂��B
-- API�ւ̓��ߓI�ȃA�N�Z�X���C�u����
-- �T�[�o�ւ�submit�@�\���C�u����
-- �R�}���h���C���X�N���v�g
+aojtoolsはAOJ(Aizu Online Judge http://judge.u-aizu.ac.jp/onlinejudge/ )のためのツールセットです。以下を含みます。
+- APIへの透過的なアクセスライブラリ
+- サーバへのsubmit機能ライブラリ
+- コマンドラインスクリプト
 
 aojtools is a library and toolset for aoj, aizu online judge system (http://judge.u-aizu.ac.jp/onlinejudge/ )
 including
