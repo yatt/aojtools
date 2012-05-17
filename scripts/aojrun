@@ -37,6 +37,8 @@ class Runner:
         self.input.close()
         self.output.close()
         self.errput.close()
+        if self.process.poll() is not None:
+          self.process.kill()
 
     def start(self):
         self.process = subprocess.Popen("./"+self.problem_id, stdin=self.input, stdout=self.output, stderr=self.errput)
