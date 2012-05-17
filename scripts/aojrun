@@ -37,7 +37,7 @@ class Runner:
         self.input.close()
         self.output.close()
         self.errput.close()
-        if self.process.poll() is not None:
+        if self.process.poll() is None:
           self.process.kill()
 
     def start(self):
