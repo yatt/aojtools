@@ -22,6 +22,14 @@ setup(
     , keywords=['competitive programming']
     , author_email='darknesssharp@gmail.com'
     , packages=['aojtools']
-    , scripts=glob.glob('scripts/*')
+    , scripts=[
+        'scripts/aojcategories',
+        'scripts/aojsubmit',
+        'scripts/aojwhatis',
+        'scripts/aojwhois',
+        'scripts/diff.py',
+        'scripts/aojrun',
+        'scripts/aojprepare',
+    ]
     , license='MIT'
 )

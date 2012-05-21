@@ -11,11 +11,14 @@ from lxml import etree
 sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
 
-
-def get(problem_id):
+def make_url(problem_id):
     q = urlencode({"id":problem_id})
     parts = ("http", "judge.u-aizu.ac.jp", "onlinejudge/description.jsp", "", q, "")
-    url = urlunparse(parts)
+    return urlunparse(parts)
+
+
+def get(problem_id):
+    url = make_url(problem_id)
 
     print 'getting:', url
 
@@ -44,6 +47,30 @@ def parse_and_save(problem_id, got):
                     f.write(candi.text.lstrip())
                     print 'wrote %s.output'%(problem_id,)
 
+def make_template(problem_id):
+    t = """\
+/* AOJ %s
+ *
+ * %s
+ *
+ */
+
+#include <stdio.h>
+
+int main(){
+
+    return 0;
+}
+"""
+    try:
+        with open(problem_id+".c", "r") as f:
+            print "has .c file. do nothing."
+    except:
+        with open(problem_id+".c", "w") as g:
+            g.write(t%(problem_id, make_url(problem_id)))
+            print "made .c file."
+
+
 
 if __name__ == "__main__":
     if not len(sys.argv) == 2:
@@ -55,4 +82,6 @@ if __name__ == "__main__":
     got = get(problem_id)
     print "received", len(got), "bytes"
     parse_and_save(problem_id, got)
+    make_template(problem_id)
+
 
