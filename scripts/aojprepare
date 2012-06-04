@@ -7,14 +7,17 @@ import codecs
 from urlparse import urlunparse
 from urllib import urlencode, urlopen
 from lxml import etree
+from aojtools import settings
 
 sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
 
 def make_url(problem_id):
-    q = urlencode({"id":problem_id})
-    parts = ("http", "judge.u-aizu.ac.jp", "onlinejudge/description.jsp", "", q, "")
-    return urlunparse(parts)
+    u = settings.url['description']
+    return u + '?id=' + str(problem_id)
+    #q = urlencode({"id":problem_id})
+    #parts = ("http", "judge.u-aizu.ac.jp", "onlinejudge/description.jsp", "", q, "")
+    #return urlunparse(parts)
 
 
 def get(problem_id):
