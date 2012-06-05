@@ -2,9 +2,6 @@ from setuptools import setup
 import glob
 
 desc = """aojtools is a toolset written in Python for aoj, aizu online judge system(http://judge.u-aizu.ac.jp/onlinejudge/) , including transparently API acccess, problem submit library and CLI script.
-
-2011/05/08 update for hostname change
-2012/03/21 update for api specification change
 """
 ldesc = desc
 

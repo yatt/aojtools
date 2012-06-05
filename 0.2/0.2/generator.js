@@ -5,13 +5,12 @@
 // license: MIT
 // desc   :  
 //    aoj (aizu online judge)のAPIリファレンスから、APIクライアントコード
-//    生成に使う情報を抽出します。
+//    生成に使う情報を抽出、フォーマット関数を呼び出します。
 // usage  :
 //    chrome等で
 //      http://judge.u-aizu.ac.jp/onlinejudge/api.jsp
 //    を開いてコンソールで以下を実行してください。
 // -----------------------------------------------------------------------------
-// ん・・・？今ってaojのapiの呼び出しさきってroseとjudgeの2つあるの
 
 (function(formatter){
 
