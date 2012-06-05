@@ -1,0 +1,43 @@
+#! /usr/bin/python
+# coding: utf-8
+
+import os
+import sys
+import time
+from aojtools import api
+
+
+if len(sys.argv) < 2:
+    print 'usage: %s userid' % os.path.basename(__file__)
+    sys.exit()
+
+def recursion(info, depth=0):
+    for k,v in info:
+        if k == "solved_list":
+            print '  ' * depth + '- solved_list:'
+            n = 15
+            for i in xrange(len(v.problem)):
+                if i % n == 0:
+                    print '  ' * (depth+1),
+                print "%04d" % v.problem[i].id,
+                if i % n == n-1 or i == len(v.problem) - 1:
+                    print ''
+            continue
+        lst = [api.libxmlload.Node, list]
+        has = not any(map(lambda cls: isinstance(v, cls), lst))
+        print '%s%s %s' % ('  ' * depth, "+-"[has], k.ljust(12)),
+        if has:
+            if k in ['registerdate', 'lastsubmitdate']:
+                v = time.strftime('%Y/%m/%d %H:%M:%S', v)
+            print '    \t',v
+        else:
+            if isinstance(v, list):
+                for item in v:
+                    recursion(item, depth+1)
+            else:
+                print ''
+                recursion(v, depth+1)
+
+uid = sys.argv[1]
+usr = api.user(uid)
+recursion(usr)
