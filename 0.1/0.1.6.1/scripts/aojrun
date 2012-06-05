@@ -1,0 +1,82 @@
+#!/usr/bin/python
+# coding: utf-8
+
+
+import sys
+import time
+import exceptions
+import subprocess
+
+
+MAXOUTPUT = 10*1024 #byte
+TIMELIMIT = 1.0 #s
+TIMESLICE = 0.01
+
+class FileLimitExceedException(Exception):
+    pass
+
+class TimeLimitExceedException(Exception):
+    pass
+
+class ReturnCodeException(Exception):
+    pass
+
+class Runner:
+    def __init__(self, problem_id):
+        self.input = open(problem_id+".input", "rb")
+        self.output = open(problem_id+".result", "wb")
+        self.errput = open(problem_id+".log", "wb")
+        self.process = None
+        self.problem_id = problem_id
+        self.onstart = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.input.close()
+        self.output.close()
+        self.errput.close()
+        if self.process.poll() is None:
+          self.process.kill()
+
+    def start(self):
+        self.process = subprocess.Popen("./"+self.problem_id, stdin=self.input, stdout=self.output, stderr=self.errput)
+
+    def elapse(self):
+        if self.onstart is not None:
+            return time.time() - self.onstart
+        else:
+            self.onstart = time.time()
+            return 0.0
+
+    def check_quota(self, f):
+        if f.tell() > MAXOUTPUT:
+            raise FileLimitExceedException()
+
+    def run(self):
+        self.start()
+        while True:
+            time.sleep(TIMESLICE)
+            if self.elapse() > TIMELIMIT:
+                raise TimeLimitExceedException()
+            self.check_quota(self.output)
+            self.check_quota(self.input)
+            self.check_quota(self.errput)
+            r = self.process.poll()
+            if r is not None:
+                if r != 0:
+                    raise ReturnCodeException
+                return r
+
+
+if __name__ == "__main__":
+    if not len(sys.argv) == 2:
+        print "please specify problem id"
+        sys.exit(0)
+    x = int(sys.argv[1])
+    problem_id = "%04d"%(x,)
+    with Runner(problem_id) as r:
+        r.run()
+        print "done. took about", r.elapse()
+

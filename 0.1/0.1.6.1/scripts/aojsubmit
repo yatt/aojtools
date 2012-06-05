@@ -1,0 +1,105 @@
+#! /usr/bin/python
+# coding: utf-8
+
+import os
+import sys
+import re
+from optparse import OptionParser
+sys.path += ['..']
+import aojtools
+api = aojtools.api
+
+def convert(s):
+    for enc in ['utf-8', 'cp932', 'sjis', 'euc-jp', 'iso-2022-jp']:
+        try:
+            t = s.decode(enc)
+            return t.encode(aojtools.settings.SITEENCODING)
+            return t.encode('sjis')
+        except Exception, e:
+            pass
+    raise Exception('unknown file encoding.')
+
+def guess_lang(filepath):
+    ext = os.path.splitext(filepath)[1]
+    if ext == '':
+        raise Exception('unknown format')
+    pairs = [('.c', api.settings.LANG_C), ('.cpp.cxx.cc.cp', api.settings.LANG_CPP), ('.java', api.settings.LANG_JAVA)]
+    for exts, cst in pairs:
+        if ext in exts:
+            return cst
+    raise Exception('unknown format')
+
+def guess_pid(filepath):
+    import re
+    lst = re.findall('AOJ\D?(\d+).*', open(filepath).readline(), re.I)
+    if len(lst) > 0:
+        return lst[0]
+    filepath
+ 
+def build_parser():
+    parser = OptionParser(usage='%prog [options] file')
+    parser.add_option('-u', '--userid', dest='uid', metavar='USERID', default='')
+    parser.add_option('-p', '--password', dest='pwd', metavar='PASSWORD', default='')
+    parser.add_option('-l', '--language', dest='lang', metavar='LANGUAGE', choices=['c','cpp','java'])
+    parser.add_option('-i', '--problem_id', dest='pid', metavar='PROBLEM_ID', type=int)
+    parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False)
+    return parser
+
+def main():
+    parser = build_parser()
+    opts, args = parser.parse_args()
+    
+    path = ''
+    uid = '' if opts.uid is None else opts.uid 
+    pwd = '' if opts.pwd is None else opts.pwd 
+    lang = '' if opts.lang is None else opts.lang 
+    pid = '' if opts.pid is None else opts.pid 
+    
+    if len(args) < 1:
+        parser.error('program file is required')
+    else:
+        path = args[0]
+    
+    if uid == '' or pwd == '':
+        rcpath = os.path.join(os.path.expandvars('$HOME'), '.aojsubmitrc')
+        if not os.path.exists(rcpath):
+            parser.error('userid and password must be specified, or put .aojsubmitrc file to home directory. show option -h')
+        lst = open(rcpath).read().split()
+        if len(lst) != 2:
+            print 'invalid rcfile. show file', rcpath
+            sys.exit()
+        uid, pwd = lst
+    
+    info = {}
+    try:
+        if lang == '':
+            lang = guess_lang(path)
+        else:
+            lang = {'c':api.settings.LANG_C, 'cpp':api.settings.LANG_CPP, 'java':api.settings.LANG_JAVA}[lang]
+        if pid == '':
+            pid = guess_pid(path)
+        code = convert(open(path).read())
+        info = {
+            'user_id': uid,
+            'password': pwd,
+            'code': code,
+            'problem_id': pid,
+            'lang': lang,
+        }
+    except Exception, e:
+        parser.error(e)
+    
+    if parser.values.verbose:
+        print 'user id   :', info['user_id']
+        print 'lang      :', info['lang']
+        print 'problem id:', info['problem_id']
+
+    try:
+        status = aojtools.submit.submit(info)
+        print status.status
+    except Exception, e:
+        print '******************** ERROR *********************'
+        print e
+
+if __name__ == '__main__':
+    main()
