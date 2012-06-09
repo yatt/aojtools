@@ -28,6 +28,23 @@ def submit_noresult(info, timeout=None):
     resp = urllib.urlopen(url, postdata).read()
     return resp
 
+
+
+def tryntimes(fun, nmax = 10, interval = 2, timeout = 10):
+    try:
+        fun()
+    except Exception, e:
+        if nmax:
+            time.sleep(interval)
+            tryntimes(fun, nmax - 1, interval, timeout)
+        else:
+            raise Exception('maximum try times exceed')
+
+def lastrunid():
+    resp = api.statuslog(user_id=info['user_id'])
+    return resp, resp.status[0].run_id
+
+
 def submit(info, timeout=None, waittime=2, maxtry=10):
     """
     usage:
@@ -42,33 +59,19 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
         #submit(info, timeout=3) # seconds
     """
     # check last runid
-    try:
-        resp = api.statuslog(user_id=info['user_id'])
-        rid = resp.status[0].run_id
-    except Exception, e:
-        raise e
+    resp, rid = lastrunid()
    
     # submit
-    ret = None
     try:
-        ret = submit_noresult(info, timeout)
+        submit_noresult(info, timeout)
     except Exception, e:
         raise e
     if 'UserID or Password is Wrong.' in ret:
         raise Exception('userid or password is wrong.')
      
     # wait until update
-    ntry = 0
-    while True:
-        try:
-            resp = api.statuslog(user_id=info['user_id'])
-        except Exception, e:
-            raise e
-        new_rid = resp.status[0].run_id
+    def fun():
+        resp, new_rid = lasatrunid()
         if new_rid > rid:
             return resp.status[0]
-        time.sleep(waittime)
-        ntry += 1
-        if ntry == maxtry:
-            raise Exception('maximum try count exceeded')
-    
+    tryntimes(fun, maxtry, waittime, timeout)

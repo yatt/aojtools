@@ -209,24 +209,35 @@ main()
             'Date': 'date2str',
         }
 
-        var rec = function(j){
+        var makerepr = function(idx, stk){
+            stk = stk || []
+            var lst = rsp[idx].path.slice(1).split('/')
+            //lst = $.makeArray($(lst).map(function(i,n){ return rsp[n].name }))
+            lst = $.makeArray($(lst).map(function(i,n){
+                var idx = stk.indexOf(n)
+                
+                return idx === -1 ? rsp[n].name: rsp[n].name + '[i' + idx + ']'
+            }))
+            return repr = 'rsp.' + lst.join('.')
+        }
+        var rec = function(j, stk){
             var d = rsp[j].depth
             var head = new Array(d + 2).join('    ')
-            if (rsp[j].freq === '1'){
-                var lst = rsp[j].path.split('/')
-                lst = $.makeArray($(lst).map(function(i,n){ return bdy[n].name }))
-                var repr = 'rsp.' + lst.join('.')
-                console.log(head + repr + ' = ' + fn[rsp[j].type] + '(' + repr + ')')
-            } else {
-                console.log('for child' + d + ' in ' + rsp[j].name + ':')
-                for (var k = j + 1; d !== rsp[k].depth; k++)
-                    if (d + 1 == rsp[k])
-                        rec(d + 1, j + 1)
+            if (rsp[j].type === ''){
+                console.log(head + 'for i' + d + ' in len(' + makerepr(j) + '):')
+                for (var k = j + 1; k < rsp.length && d !== rsp[k].depth; k++)
+                    if (d + 1 == rsp[k].depth)
+                        rec(k, stk.concat([j]))
+            }else
+            if (stk.legnth === 0){
+                console.log(head + makerepr(j) + ' = ' + fn[rsp[j].type] + '(' + repr + ')')
+            }else{
+                console.log(head + makerepr(j,stk) + ' = ' + fn[rsp[j].type] + '(' + repr + ')')
             }
         }
         for (var j = 0; j < rsp.length; j++)
             if (rsp[j].depth == 0)
-                rec(j)
+                rec(j, [])
     
         
         //
