@@ -3,8 +3,7 @@ import urllib
 import time
 import socket
 
-import api
-import settings
+import generated as api
 
 def submit_noresult(info, timeout=None):
     assert sorted(info.keys()) == sorted(['user_id', 'code', 'problem_id', 'lang', 'password']), 'first argument must have keys ["user_id", "code", "problem_id", "lang", "password"]'
@@ -14,7 +13,7 @@ def submit_noresult(info, timeout=None):
     #assert len(info['problem_id']) == 4, 'problem id must be a positive integer or four-length string'
     assert info['lang'] in ['C', 'C++', 'JAVA'], 'lang must be "C", "C++" or "JAVA"'
     
-    url = settings.submiturl
+    url = 'http://judge.u-aizu.ac.jp/onlinejudge/servlet/Submit'
     info = {
         'userID': info['user_id'],
         'sourceCode': info['code'],
@@ -41,7 +40,7 @@ def tryntimes(fun, nmax = 10, interval = 2, timeout = 10):
             raise Exception('maximum try times exceed')
 
 def lastrunid():
-    resp = api.statuslog(user_id=info['user_id'])
+    resp = api.StatusLogSearchAPI(user_id=info['user_id'])
     return resp, resp.status[0].run_id
 
 
