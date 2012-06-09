@@ -76,6 +76,7 @@ var bdyfn = function(bdy){
             freq: speccase ? '1': fn(item,3),
             sample: fn(item, speccase ? 3: 4),
             depth: fn0.indexOf('-') == -1 ? 0: fn0.indexOf('-') / 2,
+            path: '',
             }})
         .filter(function(i,n){ return n.name !== '' })
     
@@ -87,32 +88,32 @@ var bdyfn = function(bdy){
             break
         }
     }
-    
-    // lst[i].depthを元に、a/b/cという形式のパスを作成
-    var stack = []
-    for (var i = 0; i < bdy.length; i++) {
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // スタックの挙動が怪しい。
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (bdy[i].depth > stack[stack.length-1]) {
-            stack.push(i-1)
-            stack.push(i)
-        }
-        else
-        if (bdy[i].depth < stack[stack.length-1]) {
-            stack.pop();
-        }
-        bdy[i].path = stack.join('/') + '/' + i
-    }
+    var recursion = function (idx, stk){
+/*
+console.log(idx);
+console.log(bdy[idx].name);
+console.log(stk);
+*/
+        var path = (stk.length>0?'/':'') + stk.join('/') + '/' + idx
+        bdy[idx].path = path
 
-    // bdyのビルド
-    var _bdy = []
-    for (var i = 0; i < bdy.length; i++) {
-        var path = bdy[i].path.split('/')
-        for (var j = 0; j < path.length; j++)
-            _bdy[path[j]] = _bdy[path[j]] || bdy[i]
+        if (idx + 1 === bdy.length)
+            return
+
+        var n = bdy[idx + 1].depth - bdy[idx].depth
+        if (n === 0)
+            recursion(idx + 1, stk)
+        else
+        if (n > 0)
+            recursion(idx + 1, stk.concat([idx]))
+        else
+            recursion(idx + 1, stk.slice(0, -n))
     }
-    return _bdy
+    if (bdy.length)
+        recursion(0, [])
+//console.log(bdy);
+
+    return bdy
 }
 
 main()
@@ -214,7 +215,7 @@ main()
             var lst = rsp[idx].path.slice(1).split('/')
             //lst = $.makeArray($(lst).map(function(i,n){ return rsp[n].name }))
             lst = $.makeArray($(lst).map(function(i,n){
-                var idx = stk.indexOf(n)
+                var idx = stk.indexOf(parseInt(n))
                 
                 return idx === -1 ? rsp[n].name: rsp[n].name + '[i' + idx + ']'
             }))
@@ -240,6 +241,7 @@ main()
                 rec(j, [])
     
         
+        console.log('    return rsp')
         //
         console.log('')
     }
