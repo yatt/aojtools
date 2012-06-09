@@ -224,7 +224,8 @@ main()
         var rec = function(j, stk){
             var d = rsp[j].depth
             var head = new Array(d + 2).join('    ')
-            if (rsp[j].type === ''){
+            // TODO: 1回のみ出現の場合に正しく　
+            if (rsp[j].type === '') {
                 console.log(head + 'for i' + d + ' in len(' + makerepr(j) + '):')
                 for (var k = j + 1; k < rsp.length && d !== rsp[k].depth; k++)
                     if (d + 1 == rsp[k].depth)
