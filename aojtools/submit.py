@@ -3,8 +3,7 @@ import urllib
 import time
 import socket
 
-import api
-import settings
+import generated as api
 
 def submit_noresult(info, timeout=None):
     assert sorted(info.keys()) == sorted(['user_id', 'code', 'problem_id', 'lang', 'password']), 'first argument must have keys ["user_id", "code", "problem_id", "lang", "password"]'
@@ -14,7 +13,7 @@ def submit_noresult(info, timeout=None):
     #assert len(info['problem_id']) == 4, 'problem id must be a positive integer or four-length string'
     assert info['lang'] in ['C', 'C++', 'JAVA'], 'lang must be "C", "C++" or "JAVA"'
     
-    url = settings.submiturl
+    url = 'http://judge.u-aizu.ac.jp/onlinejudge/servlet/Submit'
     info = {
         'userID': info['user_id'],
         'sourceCode': info['code'],
@@ -27,6 +26,23 @@ def submit_noresult(info, timeout=None):
         socket.setefaulttimeout(timeout)
     resp = urllib.urlopen(url, postdata).read()
     return resp
+
+
+
+def tryntimes(fun, nmax = 10, interval = 2, timeout = 10):
+    try:
+        fun()
+    except Exception, e:
+        if nmax:
+            time.sleep(interval)
+            tryntimes(fun, nmax - 1, interval, timeout)
+        else:
+            raise Exception('maximum try times exceed')
+
+def lastrunid():
+    resp = api.StatusLogSearchAPI(user_id=info['user_id'])
+    return resp, resp.status[0].run_id
+
 
 def submit(info, timeout=None, waittime=2, maxtry=10):
     """
@@ -42,33 +58,19 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
         #submit(info, timeout=3) # seconds
     """
     # check last runid
-    try:
-        resp = api.statuslog(user_id=info['user_id'])
-        rid = resp.status[0].run_id
-    except Exception, e:
-        raise e
+    resp, rid = lastrunid()
    
     # submit
-    ret = None
     try:
-        ret = submit_noresult(info, timeout)
+        submit_noresult(info, timeout)
     except Exception, e:
         raise e
     if 'UserID or Password is Wrong.' in ret:
         raise Exception('userid or password is wrong.')
      
     # wait until update
-    ntry = 0
-    while True:
-        try:
-            resp = api.statuslog(user_id=info['user_id'])
-        except Exception, e:
-            raise e
-        new_rid = resp.status[0].run_id
+    def fun():
+        resp, new_rid = lasatrunid()
         if new_rid > rid:
             return resp.status[0]
-        time.sleep(waittime)
-        ntry += 1
-        if ntry == maxtry:
-            raise Exception('maximum try count exceeded')
-    
+    tryntimes(fun, maxtry, waittime, timeout)
