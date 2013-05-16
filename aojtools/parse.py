@@ -29,7 +29,7 @@ def fromweb(url, prm={}):
         enc = '&'.join('%s=%s' % (k, prm[k]) for k in prm)
         httpparam = urllib.quote
         purl = url + (enc and '?' + enc or '')
-        if True:
+        if False:
             print purl
         cont = urllib.urlopen(purl).read()
         tree = fromxml(fromstring(cont))
