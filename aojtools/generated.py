@@ -3,6 +3,8 @@
 
 import time
 import parse
+import settings
+
 
 def time2date(s):
     return time.gmtime(int(s) / 1000.)
@@ -238,6 +240,7 @@ def ProblemCategorySearchAPI(**kwargs):
             fn(p)
     else:
         fn(rsp.problem)
+        rsp.problem = [rsp.problem]
     return rsp
 def SourceSearchAPI(id, **kwargs):
     # type check
@@ -438,3 +441,13 @@ def GETRecentMessageAPI(**kwargs):
     rsp.url = str(rsp.url)
     rsp.update_time = date2str(rsp.update_time)
     return rsp
+
+
+# for aojtools v0.1 compatible
+user = UserSearchAPI
+problem = ProblemSearchAPI
+problemlist = ProblemListSearchAPI
+alluserlist = AllUserListSearchAPI
+solvedrecord = SolvedRecordSearchAPI
+statuslog = StatusLogSearchAPI
+problemcategory = ProblemCategorySearchAPI
