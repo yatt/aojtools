@@ -1,0 +1,15 @@
+#! /usr/bin/python
+# coding: utf-8
+
+import os
+import sys
+from aojtools import api
+
+if len(sys.argv) < 2:
+    path = os.path.basename(__file__)
+    print '%s user-id' % path
+else:
+    user = api.UserSearchAPI(sys.argv[1])
+    solved_ids = [p.id for p in user.solved_list.problem]
+    for solved_id in solved_ids:
+        print solved_id
