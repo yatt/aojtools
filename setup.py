@@ -21,12 +21,10 @@ setup(
     , packages=['aojtools']
     , scripts=[
         'scripts/aojcategories',
-        'scripts/aojsubmit',
-        'scripts/aojwhatis',
-        'scripts/aojwhois',
-        'scripts/diff.py',
-        'scripts/aojrun',
         'scripts/aojprepare',
+        'scripts/aojrun',
+        'scripts/aojsolvedlist',
+        'scripts/aojsubmit',
     ]
     , license='MIT'
 )
