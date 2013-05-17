@@ -31,7 +31,7 @@ def submit_noresult(info, timeout=None):
 
 def tryntimes(fun, nmax = 10, interval = 2, timeout = 10):
     try:
-        fun()
+        return fun()
     except Exception, e:
         if nmax:
             time.sleep(interval)
@@ -39,7 +39,7 @@ def tryntimes(fun, nmax = 10, interval = 2, timeout = 10):
         else:
             raise Exception('maximum try times exceed')
 
-def lastrunid():
+def lastrunid(info):
     resp = api.StatusLogSearchAPI(user_id=info['user_id'])
     return resp, resp.status[0].run_id
 
@@ -58,19 +58,21 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
         #submit(info, timeout=3) # seconds
     """
     # check last runid
-    resp, rid = lastrunid()
-   
+    resp, rid = lastrunid(info)
+
     # submit
     try:
         submit_noresult(info, timeout)
     except Exception, e:
+        print 'error:',e
         raise e
-    if 'UserID or Password is Wrong.' in ret:
+    if 'UserID or Password is Wrong.' in resp:
         raise Exception('userid or password is wrong.')
-     
     # wait until update
     def fun():
-        resp, new_rid = lasatrunid()
+        resp, new_rid = lastrunid(info)
         if new_rid > rid:
             return resp.status[0]
-    tryntimes(fun, maxtry, waittime, timeout)
+        else:
+            raise Exception('fun')
+    return tryntimes(fun, maxtry, waittime, timeout)
