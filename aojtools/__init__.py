@@ -1,3 +1,2 @@
-__all__ = ['api', 'submit']
-import api
+import generated as api
 import submit
