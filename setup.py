@@ -7,7 +7,7 @@ ldesc = desc
 
 setup(
     name='aojtools'
-    , version='0.2'
+    , version='0.2.1'
     , description=desc
     , long_description=ldesc
     , classifiers = [
@@ -21,12 +21,10 @@ setup(
     , packages=['aojtools']
     , scripts=[
         'scripts/aojcategories',
-        'scripts/aojsubmit',
-        'scripts/aojwhatis',
-        'scripts/aojwhois',
-        'scripts/diff.py',
-        'scripts/aojrun',
         'scripts/aojprepare',
+        'scripts/aojrun',
+        'scripts/aojsolvedlist',
+        'scripts/aojsubmit',
     ]
     , license='MIT'
 )
