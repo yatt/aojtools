@@ -27,4 +27,5 @@ setup(
         'scripts/aojsubmit',
     ]
     , license='MIT'
+    , url='https://github.com/yatt/aojtools'
 )
