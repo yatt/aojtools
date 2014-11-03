@@ -10,6 +10,8 @@ def time2date(s):
     return time.gmtime(int(s) / 1000.)
 def date2str(d):
     return  time.strftime('%Y/%m/%d %H:%M:%S', d)
+def to_list(l):
+    return isinstance(l, list) and l or [l]
 def UserSearchAPI(id, **kwargs):
     # type check
     if type(id) not in [str, unicode]:
@@ -37,6 +39,7 @@ def UserSearchAPI(id, **kwargs):
     s.outputlimit = int(s.outputlimit)
     s.runtimeerror = int(s.runtimeerror)
     s.compileerror = int(s.compileerror)
+    rsp.solved_list.problem = to_list(rsp.solved_list.problem)
     for p in rsp.solved_list.problem:
         p.id = str(p.id)
         p.submissiondate = time2date(p.submissiondate)
@@ -75,6 +78,7 @@ def ProblemSearchAPI(id, **kwargs):
     s.memorylimit = int(s.memorylimit)
     s.outputlimit = int(s.outputlimit)
     s.runtimeerror = int(s.runtimeerror)
+    rsp.solved_list.user = to_list(rsp.solved_list.user)
     for user in rsp.solved_list.user:
         user.id = str(user.id)
         user.submissiondate = time2date(user.submissiondate)
@@ -118,6 +122,7 @@ def AllUserListSearchAPI(**kwargs):
     # call api
     rsp = parse.fromweb(url, prm)
     # format
+    rsp.user = to_list(rsp.user)
     for user in rsp.user:
         user.rank = int(user.rank)
         user.id = str(user.id)
@@ -146,6 +151,7 @@ def SolvedRecordSearchAPI(**kwargs):
     # call api
     rsp = parse.fromweb(url, prm)
     # format
+    rsp.solved = to_list(rsp.solved)
     for s in rsp.solved:
         s.run_id = int(s.run_id)
         s.user_id = str(s.user_id)
