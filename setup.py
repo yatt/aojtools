@@ -7,7 +7,7 @@ ldesc = """aojtools is a toolset written in Python for aoj, aizu online judge sy
 
 setup(
     name='aojtools'
-    , version='0.2.2'
+    , version='0.2.4'
     , description=desc
     , long_description=ldesc
     , classifiers = [
