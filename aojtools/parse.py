@@ -27,11 +27,11 @@ def fromxml(xmlnode):
 def fromweb(url, prm={}):
     try:
         enc = '&'.join('%s=%s' % (k, prm[k]) for k in prm)
-        httpparam = urllib.quote
         purl = url + (enc and '?' + enc or '')
         if False:
             print purl
         cont = urllib.urlopen(purl).read()
+        cont = unicode(cont, 'cp1252')
         tree = fromxml(fromstring(cont))
         return tree
     except Exception, e:
