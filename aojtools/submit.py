@@ -11,7 +11,7 @@ def submit_noresult(info, timeout=None):
     if isinstance(info['problem_id'], int):
         info['problem_id'] = '%04d' % info['problem_id']
     #assert len(info['problem_id']) == 4, 'problem id must be a positive integer or four-length string'
-    assert info['lang'] in ['C', 'C++', 'JAVA'], 'lang must be "C", "C++" or "JAVA"'
+    assert info['lang'] in ['C', 'C++', 'C++11', 'JAVA'], 'lang must be "C", "C++", "C++11" or "JAVA"'
     
     url = 'http://judge.u-aizu.ac.jp/onlinejudge/servlet/Submit'
     info = {
@@ -52,7 +52,7 @@ def submit(info, timeout=None, waittime=2, maxtry=10):
             'password': (password),
             'code': (source code),
             'problem_id': (problem id, integer or string),
-            'lang': (language "C","C++",or"JAVA")
+            'lang': (language "C","C++","C++11"or"JAVA")
         }
         submit(info)
         #submit(info, timeout=3) # seconds
