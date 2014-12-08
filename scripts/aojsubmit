@@ -40,7 +40,7 @@ def build_parser():
     parser = OptionParser(usage='%prog [options] file')
     parser.add_option('-u', '--userid', dest='uid', metavar='USERID', default='')
     parser.add_option('-p', '--password', dest='pwd', metavar='PASSWORD', default='')
-    parser.add_option('-l', '--language', dest='lang', metavar='LANGUAGE', choices=['c','cpp','java'])
+    parser.add_option('-l', '--language', dest='lang', metavar='LANGUAGE', choices=['c','cpp','cpp11','java'])
     parser.add_option('-i', '--problem_id', dest='pid', metavar='PROBLEM_ID', type=int)
     parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False)
     return parser
@@ -75,7 +75,7 @@ def main():
         if lang == '':
             lang = guess_lang(path)
         else:
-            lang = {'c':api.settings.LANG_C, 'cpp':api.settings.LANG_CPP, 'java':api.settings.LANG_JAVA}[lang]
+            lang = {'c':api.settings.LANG_C, 'cpp':api.settings.LANG_CPP, 'cpp11':api.settings.LANG_CPP11, 'java':api.settings.LANG_JAVA}[lang]
         if pid == '':
             pid = guess_pid(path)
         code = convert(open(path).read())
