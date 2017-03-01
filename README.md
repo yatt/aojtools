@@ -1,7 +1,7 @@
 # aojtools
 
-![aojtools](https://badge.fury.io/py/Scrapy.png)
-![aojtools](https://pypip.in/wheel/aojtools/badge.png)
+![aojtools](https://img.shields.io/pypi/v/aojtools.svg)
+![aojtools](https://img.shields.io/badge/wheel-yes-brightgreen.svg)
 
 ## what's this?
 
